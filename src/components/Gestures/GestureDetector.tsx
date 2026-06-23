@@ -48,7 +48,7 @@ export default function GestureDetector({ video }: Props) {
       const currentX = wrist.x;
 
       // =========================
-      // ✌️ GESTO PAZ (FOTO)
+      // ✌️ GESTO PAZ = FOTO
       // =========================
       const indexUp = landmarks[8].y < landmarks[6].y;
       const middleUp = landmarks[12].y < landmarks[10].y;
@@ -69,26 +69,19 @@ export default function GestureDetector({ video }: Props) {
       }
 
       // =========================
-      // 👋 SWIPE (GATO)
-      // SOLO si NO hay gesto
+      // 👋 SWIPE = GATO
       // =========================
-      const isHandGestureActive = indexUp || middleUp;
-
-      if (
-        lastX.current !== null &&
-        !actionLock.current &&
-        !peaceGesture &&
-        !isHandGestureActive
-      ) {
+      if (lastX.current !== null && !actionLock.current) {
         const diff = currentX - lastX.current;
 
-        // 🔥 dirección izquierda/derecha
-        if (Math.abs(diff) > 0.06) {
+        const isSwipe = Math.abs(diff) > 0.07;
+
+        if (isSwipe) {
           setCatVisible(true);
 
           setTimeout(() => {
             setCatVisible(false);
-          }, 1200);
+          }, 1000);
         }
       }
 

@@ -7,7 +7,7 @@ export default function DancingCat({ visible }: Props) {
 
   return (
     <img
-      src="https://media.tenor.com/IQ6Z-aPhr1gAAAAi/cat-dance.gif"
+       src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
       alt="cat"
       style={{
         position: "absolute",

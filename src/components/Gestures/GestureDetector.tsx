@@ -52,7 +52,7 @@ export default function GestureDetector({ video }: Props) {
       const currentX = wrist.x;
 
       // =========================
-      // ✌️ GESTO PAZ = FOTO
+      // ✌️ FOTO (PEACE)
       // =========================
       const indexUp = landmarks[8].y < landmarks[6].y;
       const middleUp = landmarks[12].y < landmarks[10].y;
@@ -60,10 +60,7 @@ export default function GestureDetector({ video }: Props) {
       const pinkyDown = landmarks[20].y > landmarks[18].y;
 
       const peaceGesture =
-        indexUp &&
-        middleUp &&
-        ringDown &&
-        pinkyDown;
+        indexUp && middleUp && ringDown && pinkyDown;
 
       if (peaceGesture && !actionLock.current) {
         actionLock.current = true;
@@ -92,7 +89,7 @@ export default function GestureDetector({ video }: Props) {
 
           setTimeout(() => {
             setCatVisible(false);
-          }, 3000);
+          }, 2500);
         }
       }
 
@@ -112,109 +109,92 @@ export default function GestureDetector({ video }: Props) {
     return () => {
       try {
         camera.stop();
-      } catch (error) {
-        console.error(error);
-      }
+      } catch {}
     };
   }, [video]);
 
   const capturePhoto = (video: HTMLVideoElement) => {
     const canvas = document.createElement("canvas");
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
     const ctx = canvas.getContext("2d");
 
     if (!ctx) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
     ctx.drawImage(video, 0, 0);
 
     const image = canvas.toDataURL("image/png");
 
     const link = document.createElement("a");
-
     link.href = image;
     link.download = `photo-${Date.now()}.png`;
-
     link.click();
   };
 
   return (
     <>
-      {/* Canvas MediaPipe */}
+      {/* Canvas invisible */}
       <canvas
         ref={canvasRef}
-        className="
-          absolute
-          top-0
-          left-0
-          z-20
-          pointer-events-none
-        "
+        className="absolute top-0 left-0 z-20 pointer-events-none"
       />
 
-      {/* HUD Principal */}
+      {/* HUD principal Apple */}
       <div
         className="
-          fixed
-          top-5
-          left-5
-          z-50
-          bg-black/70
-          backdrop-blur-lg
-          border
-          border-cyan-400/30
-          rounded-2xl
-          p-4
-          text-white
-          shadow-xl
+          fixed top-6 left-6 z-50
+
+          bg-white/70 dark:bg-black/40
+          backdrop-blur-2xl
+
+          border border-white/30
+
+          rounded-3xl
+
+          px-6 py-4
+
+          shadow-[0_10px_40px_rgba(0,0,0,0.12)]
         "
       >
-        <h2 className="font-bold text-cyan-400 text-lg">
-          🤖 Gesture AI
-        </h2>
-
-        <p className="text-sm text-gray-300">
-          Cámara activa
+        <p className="text-xs tracking-widest text-gray-400 uppercase">
+          Gesture AI
         </p>
 
-        <div className="mt-3">
-          <p className="text-xs text-gray-400">
-            Estado actual
-          </p>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mt-1">
+          Cámara activa
+        </h2>
 
-          <p className="font-semibold text-cyan-300">
-            {gesture}
-          </p>
-        </div>
+        <p className="text-sm text-gray-500 mt-2">
+          {gesture}
+        </p>
       </div>
 
-      {/* Panel de gestos */}
+      {/* Panel derecho Apple */}
       <div
         className="
-          fixed
-          top-5
-          right-5
-          z-50
-          bg-white/10
-          backdrop-blur-lg
-          border
-          border-white/20
-          rounded-2xl
-          p-4
-          text-white
-          shadow-xl
+          fixed top-6 right-6 z-50
+
+          bg-white/70 dark:bg-black/40
+          backdrop-blur-2xl
+
+          border border-white/30
+
+          rounded-3xl
+
+          px-6 py-4
+
+          shadow-[0_10px_40px_rgba(0,0,0,0.12)]
         "
       >
-        <h3 className="font-semibold">
-          🎮 Controles
-        </h3>
+        <p className="text-xs tracking-widest text-gray-400 uppercase">
+          Controles
+        </p>
 
-        <ul className="mt-2 text-sm space-y-1">
-          <li>✌️ Tomar foto</li>
-          <li>👋 Mostrar gatito</li>
-        </ul>
+        <div className="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+          <p>✌️ Tomar foto</p>
+          <p>👋 Gatito bailarín</p>
+        </div>
       </div>
 
       {/* Gatito */}

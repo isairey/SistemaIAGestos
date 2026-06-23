@@ -18,7 +18,7 @@ export default function DancingCat({ visible }: Props) {
       <h2>GATO TEST</h2>
 
       <img
-        src="./200.gif"
+        src="200.gif"
         alt="cat"
         style={{
           width: 250,

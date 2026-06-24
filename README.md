@@ -202,15 +202,17 @@ Especialista en inteligencia artificial, visión por computadora y desarrollo de
 
 ---
 
-🌟 Apoya el Proyecto
+## 🌟 Apoya el Proyecto
 
 Si te gusta este proyecto:
 
-⭐ Dale una estrella
-🚀 Compártelo
-🧠 Úsalo en tus proyectos de IA
+- ⭐ Dale una estrella
+- 🚀 Compártelo
+- 🧠 Úsalo en tus proyectos de IA
 
-📜 Licencia
+---
+
+## 📜 Licencia
 
 Proyecto open source con fines educativos y de investigación en inteligencia artificial.
 

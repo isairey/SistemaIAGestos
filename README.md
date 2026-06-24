@@ -190,12 +190,18 @@ python src/main.py
 ---
 
 ## 👨‍💻 Desarrollador
-<div align="center"> <img width="140" src="https://github.com/isairey.png" />
-Isai Reyes — AI & Full Stack Developer
+
+<div align="center"> 
+  <img width="140" src="https://github.com/isairey.png" />
+  
+**Isai Reyes — AI & Full Stack Developer**
 
 Especialista en inteligencia artificial, visión por computadora y desarrollo de sistemas interactivos modernos.
 
 </div>
+
+---
+
 🌟 Apoya el Proyecto
 
 Si te gusta este proyecto:

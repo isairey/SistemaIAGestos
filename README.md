@@ -131,8 +131,8 @@ SistemaIAGestos/
 
 ### 1️⃣ Clonar repositorio
 ```
-git clone https://github.com/your-username/ai-gesture-system.git
-cd ai-gesture-system
+git clone https://github.com/isairey/SistemaIAGestos.git
+cd SistemaIAGestos
 ```
 ### 2️⃣ Instalar dependencias
 ```

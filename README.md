@@ -142,16 +142,24 @@ AI-Gesture-System/
 
 ---
 
-🚀 Instalación
+## 🚀 Instalación
 
-1️⃣ Clonar repositorio
+### 1️⃣ Clonar repositorio
+```
 git clone https://github.com/your-username/ai-gesture-system.git
 cd ai-gesture-system
-2️⃣ Instalar dependencias
+```
+### 2️⃣ Instalar dependencias
+```
 pip install -r requirements.txt
-3️⃣ Ejecutar sistema
+```
+### 3️⃣ Ejecutar sistema
+```
 python src/main.py
-🔄 Flujo del sistema
+```
+### 🔄 Flujo del sistema
+
+
 📷 Cámara web
       ↓
 🖐️ MediaPipe (detección de mano)
@@ -161,7 +169,11 @@ python src/main.py
 🎯 Clasificación del gesto
       ↓
 ⚡ Ejecución de acción
-🎯 Casos de uso
+
+
+## 🎯 Casos de uso
+
+
 🎮 Control de videojuegos con gestos
 🖥️ Interfaces sin mouse
 ♿ Sistemas de accesibilidad
@@ -173,6 +185,7 @@ python src/main.py
 🧠 Entrenamiento en tiempo real
 🔊 Integración con voz + gestos
 ☁️ API cloud para predicción
+
 👨‍💻 Fundador
 <div align="center"> <img width="140" src="https://github.com/isairey.png" />
 Isai Reyes — AI & Full Stack Developer

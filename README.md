@@ -170,6 +170,7 @@ python src/main.py
       ↓
 ⚡ Ejecución de acción
 
+---
 
 ## 🎯 Casos de uso
 
@@ -186,7 +187,9 @@ python src/main.py
 - 🔊 Integración con voz + gestos
 - ☁️ API cloud para predicción
 
-👨‍💻 Fundador
+---
+
+## 👨‍💻 Desarrollador
 <div align="center"> <img width="140" src="https://github.com/isairey.png" />
 Isai Reyes — AI & Full Stack Developer
 

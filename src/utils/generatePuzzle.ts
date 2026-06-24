@@ -1,33 +1,28 @@
-import type { PuzzlePiece } from "../types/PuzzlePiece";
+export type PuzzlePiece = {
+  id: string;
+  row: number;
+  col: number;
+};
 
-export function generatePuzzle(
-  image: string,
-  rows = 4,
-  cols = 4
-): PuzzlePiece[] {
+export function generatePuzzle(image: string, size = 3): PuzzlePiece[] {
   const pieces: PuzzlePiece[] = [];
 
-  const size = 100 / cols; // porcentaje
-
-  let id = 0;
-
-  for (let y = 0; y < rows; y++) {
-    for (let x = 0; x < cols; x++) {
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
       pieces.push({
-        id: id++,
-
-        x: Math.random() * 100, // posición inicial random
-        y: Math.random() * 100,
-
-        correctX: x * size,
-        correctY: y * size,
-
-        size,
-
-        image,
+        id: `${row}-${col}`,
+        row,
+        col,
       });
     }
   }
 
-  return pieces;
+  return shuffle(pieces);
+}
+
+function shuffle<T>(array: T[]): T[] {
+  return array
+    .map((v) => ({ v, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ v }) => v);
 }

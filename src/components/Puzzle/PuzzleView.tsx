@@ -8,7 +8,7 @@ export default function PuzzleView() {
   if (!image) {
     return (
       <div className="text-center mt-20">
-        <p className="text-gray-500">No hay imagen para el puzzle</p>
+        <p>No hay imagen</p>
 
         <button
           onClick={() => setMode("camera")}
@@ -20,39 +20,42 @@ export default function PuzzleView() {
     );
   }
 
+  const size = 320;
+  const grid = 3;
+
   return (
     <div className="flex flex-col items-center gap-6 mt-10">
-      <h2 className="text-2xl font-bold text-zinc-800">
-        🧩 Puzzle Mode
-      </h2>
+      <h2 className="text-2xl font-bold">🧩 Puzzle Mode</h2>
 
-      {/* Imagen original */}
-      <div className="rounded-2xl overflow-hidden shadow-xl border">
-        <img
-          src={image}
-          className="w-[400px] h-auto"
-          alt="puzzle source"
-        />
+      <div
+        className="grid border shadow-xl"
+        style={{
+          width: size,
+          height: size,
+          gridTemplateColumns: `repeat(${grid}, 1fr)`,
+        }}
+      >
+        {pieces.map((p: any, i: number) => (
+          <div
+            key={i}
+            className="border"
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundSize: `${grid * 100}% ${grid * 100}%`,
+              backgroundPosition: `
+                ${(p.col * 100) / (grid - 1)}%
+                ${(p.row * 100) / (grid - 1)}%
+              `,
+            }}
+          />
+        ))}
       </div>
 
-      {/* Info debug piezas */}
-      <div className="text-sm text-gray-500">
-        Piezas generadas: {pieces?.length ?? 0}
-      </div>
-
-      {/* Botón regresar */}
       <button
         onClick={() => setMode("camera")}
-        className="
-          px-6 py-3
-          bg-black
-          text-white
-          rounded-2xl
-          hover:scale-105
-          transition
-        "
+        className="px-6 py-3 bg-black text-white rounded-xl"
       >
-        Volver a cámara
+        Volver
       </button>
     </div>
   );

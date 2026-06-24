@@ -5,68 +5,314 @@ import PuzzleView from "../components/Puzzle/PuzzleView";
 import { useGameStore } from "../store/useGameStore";
 
 export default function Home() {
-  const [video, setVideo] = useState<HTMLVideoElement | null>(null);
+  const [video, setVideo] =
+    useState<HTMLVideoElement | null>(null);
+
   const mode = useGameStore((s) => s.mode);
 
   const isCamera = mode === "camera";
   const isPuzzle = mode === "puzzle";
 
-  // opcional: reset de video cuando cambias de modo
   useEffect(() => {
     if (!isCamera) setVideo(null);
   }, [isCamera]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-100 via-white to-zinc-200 flex flex-col items-center px-6 py-10">
+    <div
+      className="
+        min-h-screen
+        relative
+        overflow-hidden
 
-      {/* HEADER */}
-      <header className="text-center mb-10 max-w-2xl">
-        <p className="uppercase tracking-[0.35em] text-zinc-400 text-xs font-medium">
-          Gesture AI System
-        </p>
+        bg-gradient-to-br
+        from-zinc-50
+        via-white
+        to-zinc-200
+      "
+    >
+      {/* Glow Background */}
+      <div
+        className="
+          absolute
+          top-[-200px]
+          left-[-200px]
+          w-[500px]
+          h-[500px]
+          rounded-full
+          bg-blue-300/20
+          blur-3xl
+        "
+      />
 
-        <h1 className="text-5xl font-extrabold text-zinc-900 mt-3">
-          Gesture Puzzle AI
-        </h1>
+      <div
+        className="
+          absolute
+          bottom-[-250px]
+          right-[-250px]
+          w-[600px]
+          h-[600px]
+          rounded-full
+          bg-violet-300/20
+          blur-3xl
+        "
+      />
 
-        <p className="mt-4 text-zinc-500 text-lg">
-          Controla la aplicación con gestos de mano en tiempo real usando visión por computadora.
-        </p>
-      </header>
+      <div
+        className="
+          relative
+          z-10
 
-      {/* VIEW ROUTER */}
-      <main className="w-full flex flex-col items-center">
+          max-w-7xl
+          mx-auto
 
-        {/* CAMERA MODE */}
-        {isCamera && (
-          <section className="w-full flex flex-col items-center gap-8 animate-fadeIn">
+          px-8
+          py-10
+        "
+      >
+        {/* HEADER */}
+        <header
+          className="
+            flex
+            flex-col
+            items-center
+            text-center
+          "
+        >
+          <div
+            className="
+              px-5
+              py-2
 
-            {/* Camera Frame */}
-            <div className="relative w-full max-w-3xl overflow-hidden rounded-[40px] bg-white/70 backdrop-blur-2xl border border-white/50 shadow-[0_30px_80px_rgba(0,0,0,0.12)]">
-              <WebcamView onReady={setVideo} />
-              <GestureDetector video={video} />
-            </div>
+              rounded-full
 
-            {/* Info Panel */}
-            <div className="w-full max-w-2xl bg-white/70 backdrop-blur-xl border border-white/40 rounded-3xl px-8 py-5 shadow-lg text-center">
-              <p className="text-zinc-700 font-semibold">Gestos disponibles</p>
+              bg-white/60
+              backdrop-blur-xl
 
-              <div className="mt-3 flex justify-center gap-10 text-zinc-500 text-sm">
-                <span>✌️ Dos dedos → Puzzle</span>
-                <span>👋 Mano abierta → Acción especial</span>
+              border
+              border-white/50
+
+              shadow-lg
+            "
+          >
+            <span
+              className="
+                text-xs
+                font-semibold
+                tracking-[0.3em]
+                uppercase
+                text-zinc-500
+              "
+            >
+              AI COMPUTER VISION
+            </span>
+          </div>
+
+          <h1
+            className="
+              mt-8
+
+              text-7xl
+              font-black
+
+              tracking-tight
+
+              bg-gradient-to-r
+              from-zinc-900
+              via-zinc-700
+              to-zinc-500
+
+              bg-clip-text
+              text-transparent
+            "
+          >
+            Gesture Puzzle AI
+          </h1>
+
+          <p
+            className="
+              mt-5
+
+              text-lg
+              text-zinc-500
+
+              max-w-2xl
+            "
+          >
+            Controla el juego mediante gestos
+            detectados en tiempo real utilizando
+            inteligencia artificial y visión por
+            computadora.
+          </p>
+        </header>
+
+        {/* STATS */}
+        <div
+          className="
+            grid
+            md:grid-cols-3
+            gap-6
+
+            mt-12
+            mb-10
+          "
+        >
+          <div
+            className="
+              bg-white/70
+              backdrop-blur-2xl
+
+              rounded-3xl
+              p-6
+
+              border
+              border-white/50
+
+              shadow-xl
+            "
+          >
+            <p className="text-zinc-400 text-sm">
+              Estado
+            </p>
+
+            <h3 className="text-2xl font-bold text-zinc-900 mt-2">
+              {isCamera
+                ? "Cámara Activa"
+                : "Puzzle Activo"}
+            </h3>
+          </div>
+
+          <div
+            className="
+              bg-white/70
+              backdrop-blur-2xl
+
+              rounded-3xl
+              p-6
+
+              border
+              border-white/50
+
+              shadow-xl
+            "
+          >
+            <p className="text-zinc-400 text-sm">
+              Gesto Principal
+            </p>
+
+            <h3 className="text-2xl font-bold text-zinc-900 mt-2">
+              ✌️ Crear Puzzle
+            </h3>
+          </div>
+
+          <div
+            className="
+              bg-white/70
+              backdrop-blur-2xl
+
+              rounded-3xl
+              p-6
+
+              border
+              border-white/50
+
+              shadow-xl
+            "
+          >
+            <p className="text-zinc-400 text-sm">
+              Acción Extra
+            </p>
+
+            <h3 className="text-2xl font-bold text-zinc-900 mt-2">
+              👋 Gatito AI
+            </h3>
+          </div>
+        </div>
+
+        {/* CAMERA / PUZZLE */}
+        <main>
+          {isCamera && (
+            <div
+              className="
+                flex
+                flex-col
+                items-center
+                gap-8
+              "
+            >
+              <div
+                className="
+                  relative
+
+                  overflow-hidden
+
+                  rounded-[42px]
+
+                  bg-white/60
+                  backdrop-blur-2xl
+
+                  border
+                  border-white/60
+
+                  shadow-[0_40px_100px_rgba(0,0,0,0.15)]
+                "
+              >
+                <WebcamView onReady={setVideo} />
+
+                <GestureDetector
+                  video={video}
+                />
+              </div>
+
+              <div
+                className="
+                  bg-white/70
+                  backdrop-blur-xl
+
+                  rounded-3xl
+
+                  border
+                  border-white/50
+
+                  px-8
+                  py-5
+
+                  shadow-xl
+                "
+              >
+                <div
+                  className="
+                    flex
+                    gap-8
+                    text-sm
+                    text-zinc-600
+                  "
+                >
+                  <span>
+                    ✌️ Crear Rompecabezas
+                  </span>
+
+                  <span>
+                    👋 Activar Gatito
+                  </span>
+                </div>
               </div>
             </div>
-          </section>
-        )}
+          )}
 
-        {/* PUZZLE MODE */}
-        {isPuzzle && (
-          <section className="w-full flex justify-center animate-fadeIn">
-            <PuzzleView />
-          </section>
-        )}
+          {isPuzzle && (
+            <div
+              className="
+                flex
+                justify-center
 
-      </main>
+                mt-8
+              "
+            >
+              <PuzzleView />
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import DancingCat from "../Pets/DancingCat";
 
-// 🧠 NUEVO: store del juego
 import { useGameStore } from "../../store/useGameStore";
 import { generatePuzzle } from "../../utils/generatePuzzle";
 
@@ -18,7 +17,9 @@ export default function GestureDetector({ video }: Props) {
   const lastX = useRef<number | null>(null);
   const actionLock = useRef(false);
 
-  // 🧠 STORE GLOBAL
+  // 🔒 evita doble trigger del puzzle
+  const puzzleTriggered = useRef(false);
+
   const setMode = useGameStore((s) => s.setMode);
   const setImage = useGameStore((s) => s.setImage);
   const setPieces = useGameStore((s) => s.setPieces);
@@ -40,10 +41,12 @@ export default function GestureDetector({ video }: Props) {
 
     hands.onResults((results: any) => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (!canvas || !video) return;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
+
+      if (!video.videoWidth) return;
 
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -61,7 +64,7 @@ export default function GestureDetector({ video }: Props) {
       const currentX = wrist.x;
 
       // =========================
-      // ✌️ FOTO → AHORA ES PUZZLE
+      // ✌️ GESTO PAZ → PUZZLE
       // =========================
       const indexUp = landmarks[8].y < landmarks[6].y;
       const middleUp = landmarks[12].y < landmarks[10].y;
@@ -71,26 +74,30 @@ export default function GestureDetector({ video }: Props) {
       const peaceGesture =
         indexUp && middleUp && ringDown && pinkyDown;
 
-      if (peaceGesture && !actionLock.current) {
-        actionLock.current = true;
+      if (peaceGesture && !puzzleTriggered.current) {
+        puzzleTriggered.current = true;
 
         setGesture("✌️ Creando rompecabezas...");
 
         const image = capturePhoto(video);
 
+        console.log("📸 FOTO:", image);
+
         if (image) {
           setImage(image);
           setPieces(generatePuzzle(image));
           setMode("puzzle");
+
+          console.log("🎮 Puzzle activado");
         }
 
         setTimeout(() => {
-          actionLock.current = false;
-        }, 1500);
+          puzzleTriggered.current = false;
+        }, 2000);
       }
 
       // =========================
-      // 👋 SWIPE = GATITO
+      // 👋 SWIPE → GATITO
       // =========================
       if (lastX.current !== null && !actionLock.current) {
         const diff = currentX - lastX.current;
@@ -98,13 +105,16 @@ export default function GestureDetector({ video }: Props) {
         const isSwipe = Math.abs(diff) > 0.07;
 
         if (isSwipe) {
+          actionLock.current = true;
+
           setGesture("👋 Gatito activado");
 
           setCatVisible(true);
 
           setTimeout(() => {
             setCatVisible(false);
-          }, 2500);
+            actionLock.current = false;
+          }, 2000);
         }
       }
 
@@ -128,8 +138,10 @@ export default function GestureDetector({ video }: Props) {
     };
   }, [video]);
 
-  // 🧠 ahora devuelve la imagen
+  // 📸 captura segura
   const capturePhoto = (video: HTMLVideoElement): string | null => {
+    if (!video || !video.videoWidth) return null;
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -138,38 +150,21 @@ export default function GestureDetector({ video }: Props) {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const image = canvas.toDataURL("image/png");
-
-    return image;
+    return canvas.toDataURL("image/png");
   };
 
   return (
     <>
-      {/* Canvas invisible */}
+      {/* Canvas MediaPipe */}
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 z-20 pointer-events-none"
       />
 
-      {/* HUD principal Apple */}
-      <div
-        className="
-          fixed top-6 left-6 z-50
-
-          bg-white/70 dark:bg-black/40
-          backdrop-blur-2xl
-
-          border border-white/30
-
-          rounded-3xl
-
-          px-6 py-4
-
-          shadow-[0_10px_40px_rgba(0,0,0,0.12)]
-        "
-      >
+      {/* HUD */}
+      <div className="fixed top-6 left-6 z-50 bg-white/70 dark:bg-black/40 backdrop-blur-2xl border border-white/30 rounded-3xl px-6 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.12)]">
         <p className="text-xs tracking-widest text-gray-400 uppercase">
           Gesture AI
         </p>
@@ -178,28 +173,11 @@ export default function GestureDetector({ video }: Props) {
           Cámara activa
         </h2>
 
-        <p className="text-sm text-gray-500 mt-2">
-          {gesture}
-        </p>
+        <p className="text-sm text-gray-500 mt-2">{gesture}</p>
       </div>
 
-      {/* Panel derecho Apple */}
-      <div
-        className="
-          fixed top-6 right-6 z-50
-
-          bg-white/70 dark:bg-black/40
-          backdrop-blur-2xl
-
-          border border-white/30
-
-          rounded-3xl
-
-          px-6 py-4
-
-          shadow-[0_10px_40px_rgba(0,0,0,0.12)]
-        "
-      >
+      {/* Panel */}
+      <div className="fixed top-6 right-6 z-50 bg-white/70 dark:bg-black/40 backdrop-blur-2xl border border-white/30 rounded-3xl px-6 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.12)]">
         <p className="text-xs tracking-widest text-gray-400 uppercase">
           Controles
         </p>
@@ -210,7 +188,6 @@ export default function GestureDetector({ video }: Props) {
         </div>
       </div>
 
-      {/* Gatito */}
       <DancingCat visible={catVisible} />
     </>
   );

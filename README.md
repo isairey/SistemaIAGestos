@@ -54,21 +54,6 @@ El proyecto fue desarrollado para practicar:
 - Procesamiento en tiempo real
 - Integración de IA en sistemas interactivos
 
----
-
-# 📸 Preview
-
-<div align="center">
-
-<img src="screenshots/demo1.png" width="800"/>
-
-</div>
-
-<div align="center">
-
-<img src="screenshots/demo2.png" width="800"/>
-
-</div>
 
 ---
 
